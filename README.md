@@ -52,14 +52,14 @@ export SOCKET_SECURITY_API_TOKEN="your-token"
 
 ```bash
 # Port forward to the firewall
-kubectl port-forward svc/socket-firewall 8443:443 &
+kubectl port-forward svc/socket-firewall 8443:443 -n socket-firewall-demo &
 
 # Test blocked package
-curl -k https://npm.firewall.local:8443/form-data/-/form-data-2.3.3.tgz
+curl -sk -H "Host: npm.firewall.local" https://localhost:8443/form-data/-/form-data-2.3.3.tgz
 # Returns: 403 with blocking message
 
 # Test safe package
-curl -k https://npm.firewall.local:8443/lodash/-/lodash-4.17.21.tgz
+curl -sk -H "Host: npm.firewall.local" https://localhost:8443/lodash/-/lodash-4.17.21.tgz
 # Returns: 200 with tarball
 ```
 
